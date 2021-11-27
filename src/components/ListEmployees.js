@@ -1,38 +1,36 @@
+import React, { useState } from "react";
+import axios from "axios";
+
+const REST_URL = "http://localhost:8080/api/v1/employees";
+
 function ListEmployees() {
-  const employeeArray = [
-    {
-      id: "1",
-      fName: "Lotus",
-      lName: "baba",
-      email: "ggg@jjj",
-    },
-    {
-      id: "2",
-      fName: "Rose",
-      lName: "cada",
-      email: "uuu@ppp",
-    },
-  ];
+  const [emps, setEmps] = useState([]);
+  React.useEffect(() => {
+    axios.get(REST_URL).then((response) => {
+      console.log(response.data);
+      setEmps(response.data);
+    });
+  }, []);
   return (
     <>
       {/* NAVBAR */}
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="container-fluid">
+          <a className="navbar-brand" href="#">
             ADK Inc
           </a>
           <button
-            class="navbar-toggler"
+            className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navmenu"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navmenu">
-            <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
+          <div className="collapse navbar-collapse" id="navmenu">
+            <ul className="navbar-nav mb-2 mb-lg-0 ms-auto">
+              <li className="nav-item">
+                <a className="nav-link active" aria-current="page" href="#">
                   HOME
                 </a>
               </li>
@@ -43,26 +41,27 @@ function ListEmployees() {
       {/* SHOWCASE */}
       <section className="bg-secondary text-light p-5 text-center text-sm-start">
         <div className="container">
-          <div class="d-sm-flex align-items-center justify-content-between">
+          <div className="d-sm-flex align-items-center justify-content-between">
             <img
               src="images/Main-office-icon.svg"
               alt=""
-              class="img-fluid d-none d-sm-block news-input"
+              className="img-fluid d-none d-sm-block news-input"
             />
             <div>
               <h1>
-                <span class="text-warning">Employee</span> Database
+                <span className="text-warning">Employee</span> Database
               </h1>
-              <p class="lead my-4">
+              <p className="lead my-4">
                 Created using Spring boot + reactjs + bootstrap 5
               </p>
             </div>
           </div>
         </div>
       </section>
+
       {/* TABLE OF EMPLOYEES */}
-      <div class="mx-4 my-4">
-        <table class="table table-striped table-bordered table-sm">
+      <div className="mx-4 my-4">
+        <table className="table table-striped table-bordered table-sm">
           <thead>
             <tr>
               <th scope="col">Id</th>
@@ -73,16 +72,25 @@ function ListEmployees() {
             </tr>
           </thead>
 
-          {employeeArray.map((emp) => (
-            <tbody>
-              <th scope="col">{emp.id}</th>
-              <th scope="col">{emp.fName}</th>
-              <th scope="col">{emp.lName}</th>
-              <th scope="col">{emp.email}</th>
+          {emps.map((emp) => (
+            <tbody key={emp.id}>
+              <tr>
+                <td scope="col">{emp.id}</td>
+                <td scope="col">{emp.firstName}</td>
+                <td scope="col">{emp.lastName}</td>
+                <td scope="col">{emp.email}</td>
+              </tr>
             </tbody>
           ))}
         </table>
       </div>
+
+      {/* FOOTER */}
+      <footer class="footer mt-auto py-3 bg-dark">
+        <div class="container">
+          <span class="text-muted">Created by: anju karanji</span>
+        </div>
+      </footer>
     </>
   );
 }
